@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>TASK 2</title>
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  </head>
+  <body>
+    <div class="container">
+      <!-- <div class="jumbotron"> -->
+      <header class='head'>
+        <h1>TASK 2</h1>
+        <h6>To take input from user using forms and generate the expected output</h6>
+      </header>
+      <section class='sect'>
+        <form class='center form-box' method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <br>
+        <input class='center submit-button' type="submit" value="Submit">
+        </form>
+      </section>
+      <!-- </div> -->
+    </div>
+  </body>
+</html>

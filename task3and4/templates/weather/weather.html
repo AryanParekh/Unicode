@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+{%load static%}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>TASK 3 AND 4</title>
+    <link rel="stylesheet" href="{% static 'css/weather.css'%}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.css" />
+<body>
+    <section class="head1">
+        <div class="hero-body head2">
+            <div class="container">
+                <h1 class="title">
+                  <span class='text-white'>Welcome To My</span><br>
+                    <span class='text-primary'>Weather Indicator</span><br>
+                  <span class='text-white'>Website</span>
+                </h1>
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="container">
+              <br><h1 class='title'>About The <span class='text-primary'>Website</span></h1><br>
+              <p class='content-in-p'>This Website uses API to access Weather Information of a particular valid geographical location on this Planet.<br>
+                                      It takes the location as an input and displays basic information about the weather of that particular location.<br>
+                                      It also keeps a track of the number of times a user searches for a particular location and displays the same<br>
+                                      in a descending order. It also shows an error message if someone searches for an invalid location or the same<br>
+                                      location again. You can also remove the locations if you are not intrested in tracking the weather there.</p>
+              <br>
+        </div>
+    </section>
+    <section class="section bg-light">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-offset-4 is-4">
+                    <form method="POST">
+                      {% csrf_token %}
+                        <div class="field has-addons">
+                            <div class="control is-expanded">
+                                {{ form.name }}
+                            </div>
+                            <div class="control">
+                                <button type="submit"class="button is-info">
+                                    Add Location
+                                </button>
+                            </div>
+                        </div>
+                        {% if message %}
+                        <div class="notification {{message_class}}">{{message}}</div>
+                        {% endif %}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section bg-medium">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-offset-4 is-4">
+                  {% for city_weather in weather_data %}
+                    <div class="box">
+                        <article class="media">
+                            <div class="media-left">
+                                <figure class="image is-50x50">
+                                    <img src="http://openweathermap.org/img/w/{{city_weather.icon}}.png" alt="Image">
+                                </figure>
+                            </div>
+                            <div class="media-content">
+                                <div class="content">
+                                    <p>
+                                        <span class="title">{{city_weather.city}}</span>
+                                        <br>
+                                        <span class="subtitle">{{city_weather.temperature}}° C</span>
+                                        <br> {{city_weather.description}}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="media-right">
+                              <a href="{% url 'delete_city' city_weather.city%}"><button class='delete'></button></a>
+                            </div>
+                        </article>
+                    </div>
+                  {% endfor %}
+                  <br><br><br><br><br>
+                  {%if count%}
+                  <h3><span class='title'>Most Searched Locations:</span></h3><br>
+                  {%endif%}
+                  {% for p,c in count %}
+                    <div class="box">
+                        <article class="media">
+                            <div class="media-content">
+                                <div class="content">
+                                    <h3>
+                                        <span class="text-primary">{{p}} - {{c}}</span>
+                                        <br>
+                                    </h3>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                  {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    </footer>
+</body>
+
+</html>
